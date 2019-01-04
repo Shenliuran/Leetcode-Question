@@ -20,27 +20,40 @@ int area(int *front, int *end)
 	int a = (int)(end - front) * ((*front) < (*end) ? (*front) : (*end));
 	return a;
 }
+int maxOfThree(int one, int two, int three)
+{
+	return (one > two ? one : two) > three ? (one > two ? one : two) : three;
+}
 int maxArea2(int* height, int heightSize)
 {
 	int length = heightSize - 1;
-	int max1 = area(height, height + length);
-	int	max2 = area(height, height + length - 1);
-	int	max3 = area(height + 1, height + length);
-	int max = (max1 > max2 ? max1 : max2) > max3 ? (max1 > max2 ? max1 : max2) : max3;
-	int record = max;
-	if (max <= max1)
-		return maxArea2(height, length);
-	else if (max <= max2)
-		return maxArea2(height, length - 1);
-	else if (max <= max3)
-		return maxArea2(height + 1, length);
-	else
-		return ;
+	int ptrFront = 0, ptrEnd = heightSize - 1;
+	int max = 0;
+	while (ptrFront != ptrEnd)
+	{
+		int whole = area(height + ptrFront, height + ptrEnd);
+		int left = area(height + ptrFront, height + ptrEnd - 1);
+		int right = area(height + ptrFront + 1, height + ptrEnd);
+		if (max < maxOfThree(whole, left, right))
+			max = maxOfThree(whole, left, right);
+		if (max == whole)
+		{
+			if (left > right)
+				ptrEnd--;
+			else
+				ptrFront++;
+		}
+		else if (max == left)
+			ptrEnd--;
+		else
+			ptrFront++;
+	}
+	return max;
 }
 int main(void)
 {
-	int a[7] = { 2,3,10,5,7,8,9 };
-	cout << maxArea(a, 7) << endl;
-	cout << maxArea2(a, 7) << endl;
+	int a[9] = { 1,2,3,4,5,25,24,3,4};
+	cout << maxArea(a, 9) << endl;
+	cout << maxArea2(a, 9) << endl;
 	return 0;
 }
