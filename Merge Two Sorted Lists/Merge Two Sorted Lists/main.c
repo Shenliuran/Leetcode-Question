@@ -49,6 +49,16 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
 				ptrNow1 = ptrNowNext1;
 				ptrNowNext1 = ptrNowNext1->next;
 			}
+			/*else if (ptrOp2->val == ptrNowNext1->val)
+			{
+				ptrOp2->next = ptrNow1->next;
+				ptrNow1->next = ptrOp2;
+
+				ptrOp2 = ptrOpNext2;
+				ptrOpNext2 = ptrOpNext2->next;
+				ptrNow1 = ptrNowNext1;
+				ptrNowNext1 = ptrNowNext1->next;
+			}*/
 			else if (ptrOp2->val < ptrNow1->val)
 			{
 				ptrOp2->next = ptrNow1;
@@ -73,9 +83,9 @@ int main(void)
 	l1 = pushBack(l1, 1);
 	l1 = pushBack(l1, 2);
 	l1 = pushBack(l1, 3);
+	l2 = pushBack(l2, 2);
 	l2 = pushBack(l2, 3);
-	l2 = pushBack(l2, 3);
-	l2 = pushBack(l2, 3);
+	l2 = pushBack(l2, 4);
 	print(l1);
 	print(l2);
 	print(mergeTwoLists(l1, l2));
